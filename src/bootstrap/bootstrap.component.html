@@ -1,0 +1,18 @@
+<!-- Use this HTML for showcasing the toolkit -->
+
+<!-- <h3>Showcase component declared inside demos page (bootstrap.component.html)</h3> -->
+<div style="padding-left: 100px"><input type="radio" (change)="radioChanged(0)" name="chart" value="radial">Radial
+    <input type="radio" (change)="radioChanged(1)" name="chart" value="donutChart">Donut
+    <input type="radio" (change)="radioChanged(2)" name="chart" value="chart">Map<br>
+</div>
+
+
+<div *ngIf="charts[0]">
+    <radial-chart dataUrl="../../assets/json/radial_demo.json"></radial-chart>
+</div>
+<div *ngIf="charts[1]">
+    <donut-chart dataUrl="../../assets/json/donut_demo.json"></donut-chart>
+</div>
+<div *ngIf="charts[2]">
+    <map-chart dataUrl="../../assets/json/world_demo.json"></map-chart>
+</div>

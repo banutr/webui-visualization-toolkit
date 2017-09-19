@@ -1,0 +1,116 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "width": 1000,
+    "height": 800,
+    "padding": 5,
+  
+    "data": [
+      {
+        "name": "table",
+        "values": [
+          {"assignee": "Samsung", "ipcs":"AAAA", "count": 28, "strength":87},
+          {"assignee": "Samsung", "ipcs":"BBBB", "count": 58, "strength":77},
+          {"assignee": "Samsung", "ipcs":"CCCC", "count": 34, "strength":24},
+          {"assignee": "Samsung", "ipcs":"DDDD", "count": 22, "strength":89},
+          {"assignee": "Samsung", "ipcs":"EEEE", "count": 33, "strength":123},
+          {"assignee": "Samsung", "ipcs":"FFFF", "count": 891, "strength":11111},
+          {"assignee": "Samsung", "ipcs":"GGGG", "count": 55, "strength":78},
+          {"assignee": "Samsung", "ipcs":"HHHH", "count": 67, "strength":90},
+          {"assignee": "Sony", "ipcs":"BBBB", "count": 55, "strength":55},
+          {"assignee": "LG", "ipcs":"CCCC", "count": 43, "strength":43},
+          {"assignee": "Motorola", "ipcs":"DDDD", "count": 91, "strength":91},
+          {"assignee": "Sony", "ipcs":"EEEE", "count": 81, "strength":81},
+          {"assignee": "Apple", "ipcs":"FFFF", "count": 53, "strength":53},
+          {"assignee": "IBM", "ipcs":"GGGG", "count": 19, "strength":19},
+          {"assignee": "Taiwan Semiconductor", "ipcs":"HHHH", "count": 87, "strength":28}
+        ]
+      }
+    ],
+  
+    "signals": [
+      {
+        "name": "tooltip",
+        "value": {},
+        "on": [
+          {"events": "symbol:mouseover", "update": "datum"},
+          {"events": "symbol:mouseout",  "update": "{}"}
+        ]
+      }
+    ],
+  
+    "scales": [
+      {
+        "name": "xscale",
+        "type": "band",
+        "domain": {"data": "table", "field": "assignee"},
+        "range": "width",
+        "padding": 1
+      },
+      {
+        "name": "yscale",
+        "type": "band",
+        "domain": {"data": "table", "field": "ipcs"},
+        "range": "height",
+        "padding": 1
+      },
+      {
+        "name": "size",
+        "type": "linear",
+        "round": true,
+        "nice": false,
+        "zero": true,
+        "domain": {"data": "table", "field": "count"},
+        "range": [4,1000]
+      },
+      {
+        "name": "color",
+        "type": "ordinal",
+        "range": {"scheme": "category20"}
+      }
+    ],
+  
+    "axes": [
+      { "orient": "bottom", "scale": "xscale" , "grid": true},
+      { "orient": "left", "scale": "yscale" , "grid": true}
+    ],
+  
+    "marks": [
+      {
+        "type": "symbol",
+        "from": {"data":"table"},
+        "encode": {
+          "enter": {
+            "x": {"scale": "xscale", "field": "assignee"},
+            "y": {"scale": "yscale", "field": "ipcs"},
+            "shape": {"value": "circle"},
+            "size": {"scale": "size", "field": "count"}
+          },
+          "update": {
+            "fill": {"scale": "color", "field": "strength"}
+          },
+          "hover": {
+            "fill": {"value": "red"}
+          }
+        }
+      },
+      {
+        "type": "text",
+        "encode": {
+          "enter": {
+            "align": {"value": "center"},
+            "baseline": {"value": "bottom"},
+            "fill": {"value": "#333"}
+          },
+          "update": {
+            "x": {"scale": "xscale", "signal": "tooltip.assignee", "band": 0.5},
+            "y": {"scale": "yscale", "signal": "tooltip.count", "offset": -2},
+            "text": {"signal": "tooltip.count"},
+            "fillOpacity": [
+              {"test": "datum === tooltip", "value": 0},
+              {"value": 1}
+            ]
+          }
+        }
+      }
+    ]
+  }

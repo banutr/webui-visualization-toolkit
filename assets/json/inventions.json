@@ -1,0 +1,38 @@
+[{
+        "countryCode": 356,
+        "prioritadasdas": 60,
+        "priorityApps": 15,
+        "priorityGrants": 45,
+        "expandAll": 0,
+        "expandApps": 0,
+        "expandGrants": 0
+
+    },
+    {
+        "countryCode": 304,
+        "prioritadasdas": 70,
+        "priorityApps": 45,
+        "priorityGrants": 25,
+        "expandAll": 0,
+        "expandApps": 0,
+        "expandGrants": 0
+    },
+    {
+        "countryCode": 156,
+        "prioritadasdas": 0,
+        "priorityApps": 0,
+        "priorityGrants": 0,
+        "expandAll": 90,
+        "expandApps": 25,
+        "expandGrants": 65
+    },
+    {
+        "countryCode": 840,
+        "prioritadasdas": 0,
+        "priorityApps": 0,
+        "priorityGrants": 0,
+        "expandAll": 70,
+        "expandApps": 25,
+        "expandGrants": 45
+    }
+]

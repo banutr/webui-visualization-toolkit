@@ -1,0 +1,161 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "width": 850,
+    "height": 550,
+    "autosize": "none",
+
+    "encode": {
+        "update": {
+            "fill": { "value": "white" }
+        }
+    },
+
+    "signals": [{ "name": "tx", "update": "width / 2" },
+        { "name": "ty", "update": "height / 2" },
+        {
+            "name": "scaleMouse",
+            "value": 130,
+            "on": [{
+                "events": { "type": "wheel", "consume": true },
+                "update": "clamp(scaleMouse * pow(1.0001, -event.deltaY * pow(16, event.deltaMode)), 132, 3000)"
+            }]
+        },
+        {
+            "name": "angles",
+            "value": [0, 0],
+            "on": [{
+                "events": "mousedown",
+                "update": "[rotateX, centerY]"
+            }]
+        },
+        {
+            "name": "cloned",
+            "value": null,
+            "on": [{
+                "events": "mousedown",
+                "update": "copy('projection')"
+            }]
+        },
+        {
+            "name": "start",
+            "value": null,
+            "on": [{
+                "events": "mousedown",
+                "update": "invert(cloned, xy())"
+            }]
+        },
+        {
+            "name": "drag",
+            "value": null,
+            "on": [{
+                "events": "[mousedown, window:mouseup] > window:mousemove",
+                "update": "invert(cloned, xy())"
+            }]
+        },
+        {
+            "name": "delta",
+            "value": null,
+            "on": [{
+                "events": { "signal": "drag" },
+                "update": "[drag[0] - start[0], start[1] - drag[1]]"
+            }]
+        },
+        {
+            "name": "rotateX",
+            "value": 0,
+            "on": [{
+                "events": { "signal": "delta" },
+                "update": "angles[0] + delta[0]"
+            }]
+        },
+        {
+            "name": "centerY",
+            "value": 51,
+            "on": [{
+                "events": { "signal": "delta" },
+                "update": "clamp(angles[1] + delta[1], -60, 0)"
+            }]
+        },
+        {
+            "name": "Zoom",
+            "value": 132,
+            "bind": { "input": "range", "min": 132, "max": 500, "step": 1 },
+            "on": [{
+                "events": { "signal": "scaleMouse" },
+                "update": "scaleMouse"
+            }]
+        },
+        {
+            "name": "location",
+            "description": "testest",
+            "value": "Priority Marketplace",
+            "bind": { "input": "radio", "options": ["Priority Marketplace", "Expanded Marketplace"] }
+        },
+        {
+            "name": "Protection",
+            "value": "All",
+            "bind": { "input": "radio", "options": ["All", "Apps", "Granted"] }
+        }
+    ],
+
+    "projections": [{
+        "name": "projection",
+        "type": "equirectangular",
+        "scale": { "signal": "Zoom" },
+        "rotate": [{ "signal": "rotateX" }, 0, 0],
+        "center": [0, { "signal": "centerY" }]
+    }],
+
+    "data": [{
+            "name": "inventions",
+            "url": "../../assets/json/inventions.json",
+            "format": { "type": "json", "parse": "auto" }
+        },
+
+        {
+            "name": "world2",
+            "url": "../../assets/json/worldData.json",
+            "format": { "type": "topojson", "feature": "countries" },
+            "transform": [{
+                    "type": "lookup",
+                    "from": "inventions",
+                    "key": "countryCode",
+                    "fields": ["id"],
+                    "values": ["priorityAll", "expandAll", "priorityApps", "priorityGrants", "expandApps", "expandGrants"]
+                }
+
+            ]
+        }
+    ],
+
+    "scales": [{
+        "name": "color",
+        "type": "quantize",
+        "domain": [0, 100],
+        "range": { "scheme": "blues-9" }
+    }],
+
+    "marks": [{
+        "type": "shape",
+        "from": { "data": "world2" },
+        "encode": {
+            "update": {
+                "strokeWidth": { "value": 0.1 },
+                "stroke": { "value": "green" },
+                "fill": {
+                    "scale": "color",
+                    "field": { "signal": "if(location === 'Priority Marketplace',if(Protection === 'All', 'priorityAll', if(Protection === 'Apps', 'priorityApps', 'priorityGrants' )) ,if(Protection === 'All', 'expandAll', if(Protection === 'Apps', 'expandApps', 'expandGrants' )))" }
+                },
+
+                "zindex": { "value": 0 }
+            },
+            "hover": {
+                "fill": { "value": "green" },
+                "zindex": { "value": 1 }
+            }
+        },
+        "transform": [
+            { "type": "geoshape", "projection": "projection" }
+        ]
+    }]
+}

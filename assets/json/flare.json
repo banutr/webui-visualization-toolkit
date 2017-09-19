@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "name": "flare",
+    "rad": 10
+  },
+  {
+    "id": 2,
+    "name": "analytics",
+    "parent": 1,
+    "rad": 20
+
+  },
+  {
+    "id": 3,
+    "name": "cluster",
+    "parent": 2,
+    "rad": 30
+  },
+
+  {
+    "id": 5,
+    "name": "CommunityStructure",
+    "parent": 1,
+    "size": 3812,
+    "rad": 10
+
+  },
+  {
+    "id": 6,
+    "name": "HierarchicalCluster",
+    "parent": 3,
+    "size": 6714,
+    "rad": 70
+
+  },
+  {
+    "id": 7,
+    "name": "MergeEdge",
+    "parent": 2,
+    "size": 743,
+    "rad": 30
+
+  },
+  {
+    "id": 8,
+    "name": "graph",
+    "parent": 2,
+    "rad": 40
+
+  },
+  {
+    "id": 9,
+    "name": "sdsas",
+    "parent": 3,
+    "size": 614,
+    "rad": 140
+
+  }
+]
+

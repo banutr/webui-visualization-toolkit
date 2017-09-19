@@ -1,0 +1,94 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "width": 400,
+    "height": 400,
+
+
+    "data": [{
+        "name": "table",
+        "values": [
+            { "group": 1, "alive": 4, "area": 22.5 },
+            { "group": 2, "alive": 5, "area": 22.5 },
+            { "group": 3, "alive": 6, "area": 22.5 },
+            { "group": 4, "alive": 3, "area": 22.5 },
+            { "group": 5, "alive": 2, "area": 22.5 },
+            { "group": 6, "alive": 9, "area": 22.5 },
+            { "group": 7, "alive": 5.8, "area": 22.5 },
+            { "group": 8, "alive": 8.5, "area": 22.5 },
+            { "group": 9, "alive": 4.7, "area": 22.5 },
+            { "group": 10, "alive": 7.3, "area": 22.5 },
+            { "group": 11, "alive": 3.1, "area": 22.5 },
+            { "group": 12, "alive": 5.5, "area": 22.5 }
+        ],
+        "transform": [{ "type": "pie", "field": "area" }]
+
+    }],
+
+
+    "scales": [{
+        "name": "r",
+        "type": "sqrt",
+
+        "domain": { "data": "table", "field": "alive" },
+        "zero": true,
+        "range": [23, 300]
+
+    }],
+
+
+    "marks": [{
+            "type": "arc",
+
+            "from": { "data": "table" },
+
+            "encode": {
+                "enter": {
+                    "x": { "field": { "group": "width" }, "mult": 0.5 },
+                    "y": { "field": { "group": "height" }, "mult": 0.5 },
+                    "startAngle": { "field": "startAngle" },
+                    "endAngle": { "field": "endAngle" },
+                    "innerRadius": { "value": 20 },
+
+                    "outerRadius": { "scale": "r", "field": "alive" },
+                    "strokeWidth": { "value": "0.5" },
+                    "stroke": { "value": "#3399ff" }
+                },
+                "update": {
+                    "fill": { "value": "lightGray" },
+                    "innerRadius": { "value": 20 },
+                    "outerRadius": { "scale": "r", "field": "alive" }
+                },
+                "hover": {
+                    "fill": { "value": "brown" },
+                    "innerRadius": { "value": 30 },
+                    "outerRadius": { "scale": "r", "signal": "1.0 * datum.alive" }
+                }
+            }
+        },
+
+
+        {
+            "type": "text",
+            "from": { "data": "table" },
+
+            "encode": {
+                "enter": {
+                    "x": { "field": { "group": "width" }, "mult": 0.5 },
+                    "y": { "field": { "group": "height" }, "mult": 0.5 },
+
+                    "radius": { "scale": "r", "field": "alive", "offset": 20 },
+
+                    "theta": { "signal": "(datum.startAngle + datum.endAngle)/2" },
+
+                    "align": { "value": "center" },
+                    "baseline": { "value": "middle" },
+
+                    "text": { "field": "alive" },
+                    "font": { "value": "Arial" },
+                    "fontSize": { "value": 14 },
+                    "fontWeight": { "value": "normal" }
+                }
+            }
+        }
+    ]
+}

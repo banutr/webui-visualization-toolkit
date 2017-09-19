@@ -1,0 +1,125 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+  "width": 400,
+  "height": 400,
+  "autosize": "fit",
+
+  "signals": [
+    {
+      "name": "startAngle", "value": 0
+    },
+    {
+      "name": "endAngle", "value": 6.29
+    },
+    {
+      "name": "active", "value": 0,
+      "on": [
+        { "events": "arc:click", "update": "datum.id" },
+        { "events": "arc:dblclick", "update": "null" }
+      ]
+    }
+  ],
+
+  "data": [
+    {
+      "name": "table",
+      "values": [
+        {"id": 1, "name": "Grain", "records":1296, "parent":null},
+        {"id": 2, "name": "Rice", "records":544, "parent":1},
+        {"id": 3, "name": "Wheat", "records":526, "parent":1},
+        {"id": 4, "name": "Maize", "records":226, "parent":1},
+        {"id": 5, "name": "Sugar & Fat", "records":570, "parent":null},
+        {"id": 6, "name": "Sugar & Sweetner", "records":229, "parent":5},
+        {"id": 7, "name": "Vegetable Oils", "records":280, "parent":5},
+        {"id": 8, "name": "Oil Crops", "records":57, "parent":5}
+      ],
+      "transform": [
+        {
+          "type": "pie",
+          "field": "records",
+          "startAngle": {"signal": "startAngle"},
+          "endAngle": {"signal": "endAngle"}
+        }
+      ]
+    },
+    {
+      "name": "parent",
+      "source": "table",
+      "transform": [
+        {"type":"filter",
+          "expr": "datum.parent == null"
+        },
+        {"type": "pie",
+        "field": "records",
+        "startAngle": {"signal": "startAngle"},
+        "endAngle": {"signal": "endAngle"}
+        }
+      ]
+    },
+    {
+      "name": "indexed_items",
+      "source": "table",
+      "transform": [
+        {
+          "type": "lookup", "from": "parent", "key": "id",
+          "fields": ["parent"], "as": ["parent"]
+        },
+        {
+          "type": "formula",
+          "as": "parentName",
+          "expr": "datum.parent!=null ? datum.parent.name:null"
+        },
+        {
+          "type": "filter",
+          "expr": "active!=datum.id"
+        },
+        {"type": "pie",
+          "field": "records",
+          "startAngle": {"signal": "startAngle"},
+          "endAngle": {"signal": "endAngle"}
+          }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "range": {"scheme": "category10"}
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "arc",
+      "interactive": true,
+      "from": {"data": "indexed_items"},
+      "encode": {
+        "enter": {
+          "fill": [
+            {"scale": "color", "field": "id"}
+          ],
+          "x": {"signal": "width / 2"},
+          "y": {"signal": "height / 2"},
+          "text" :{"value": "datum.id"}
+        },
+        "update": {
+          "startAngle": {"field": "startAngle"},
+          "endAngle": {"field": "endAngle"},
+          "padAngle": {"value": 0},
+          "innerRadius": {"signal": "width/4"},
+          "outerRadius": {"signal": "width / 2"},
+          "cornerRadius": {"value": 0},
+          "opacity":{"value": 1}
+        },
+        "hover":{
+          "opacity":[
+            {"test": "!active && active==datum.id","value": 1},
+            {"value":0.3}
+          ]
+        }
+      }
+    }
+  ]
+}

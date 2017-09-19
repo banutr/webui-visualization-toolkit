@@ -1,0 +1,98 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "width": 500,
+    "height": 500,
+    "autosize": "fit",
+
+    "signals": [{
+            "name": "selected",
+            "value": "",
+            "on": [
+                { "events": "arc:click!", "update": "datum" },
+                { "events": "dblclick!", "update": "''" }
+            ]
+        },
+        {
+            "name": "hovered",
+            "value": "",
+            "on": [
+                { "events": "arc:mouseover!", "update": "datum" },
+                { "events": "arc:mouseout!", "update": "''" }
+            ]
+        }
+    ],
+
+    "data": [{
+            "name": "table",
+            "values": [
+                { "assignee": "Samsung", "ipcs": "Biocompatible crosslinked polymer preparation but with some new keywords as this is IPC number 11.", "records": 28, "strength": 87 },
+                { "assignee": "Samsung", "ipcs": "New biocompatible polyhydroxyalkanoate -  having a controlled degradation rate of less  than one year under physiological conditions.", "records": 58, "strength": 77 },
+                { "assignee": "Samsung", "ipcs": "Elastic substantially linear olefin polymers  with processability similar to high branched  LDPE but strength and toughness of LLDPE.", "records": 34, "strength": 24 },
+                { "assignee": "Samsung", "ipcs": "Elastic substantially linear olefin polymers  with processability similar to high branched  LDPE but strength and toughness of LLDPE.", "records": 89, "strength": 111 },
+                { "assignee": "Samsung", "ipcs": "Processability similar to high branched  LDPE but strength.", "records": 55, "strength": 78 },
+                { "assignee": "Sony", "ipcs": "Biocompatible crosslinked polymer  preparation", "records": 67, "strength": 90 },
+                { "assignee": "Sony", "ipcs": "New biocompatible polyhydroxyalkanoate -  having a controlled degradation rate of less  than one year under physiological conditions.", "records": 55, "strength": 55 },
+                { "assignee": "Sony", "ipcs": "Elastic substantially linear olefin polymers  with processability similar to high branched  LDPE but strength and toughness of LLDPE.", "records": 43, "strength": 43 },
+                { "assignee": "Motorola", "ipcs": "Biocompatible crosslinked polymer  preparation by nucleophilic-electrophilic  group reaction between functional polymer  and crosslinking agent, useful e.g. for  preventing surgical adhesions or for drug  delivery.", "records": 91, "strength": 91 },
+                { "assignee": "Apple", "ipcs": "Ethylene polymer, partic. substantially linear  ethylene polymer has melt flow ratio of at least  5.63, mol. wt. distribution of 1.5-2.5, greater  critical shear stress than similar polymers and  had improved processability.", "records": 81, "strength": 81 },
+                { "assignee": "Apple", "ipcs": "Elastic substantially linear olefin polymers  with processability similar to high branched  LDPE but strength and toughness of LLDPE.", "records": 53, "strength": 53 },
+                { "assignee": "Apple", "ipcs": "Processability similar to high branched  LDPE but strength.", "records": 19, "strength": 19 },
+                { "assignee": "Apple", "ipcs": "Biocompatible crosslinked polymer  preparation", "records": 87, "strength": 28 }
+            ]
+        },
+        {
+            "name": "finalData",
+            "source": "table",
+            "transform": [{
+                "type": "pie",
+                "field": "records"
+            }]
+        }
+    ],
+
+    "scales": [{
+        "name": "color",
+        "type": "ordinal",
+        "range": { "scheme": "dark2" }
+    }],
+
+    "marks": [{
+        "name": "mark",
+        "type": "arc",
+        "interactive": true,
+        "from": { "data": "finalData" },
+        "encode": {
+            "enter": {
+                "fill": { "scale": "color", "field": "assignee" },
+                "x": { "signal": "width / 2" },
+                "y": { "signal": "height / 2" }
+            },
+            "update": {
+                "tooltip": [
+                    { "test": "(selected.assignee === datum.assignee)", "signal": "datum.ipcs + (datum.records ? ', ' + datum.records + ' records' : '')" },
+                    { "signal": "datum.assignee + (datum.records ? ', ' + datum.records + ' records' : '')" }
+                ],
+                "startAngle": { "field": "startAngle" },
+                "endAngle": { "field": "endAngle" },
+                "stroke": [
+                    { "test": "(selected.assignee === datum.assignee)", "value": "white" },
+                    { "scale": "color", "field": "assignee" }
+                ],
+                "strokeOpacity": [
+                    { "test": "(hovered.assignee===datum.assignee)", "value": 1.0 },
+                    { "test": "!selected && !hovered", "value": 1.0 },
+                    { "value": 0.0 }
+                ],
+                "padAngle": [
+                    { "test": "(selected.assignee !== datum.assignee)", "value": 0.0 },
+                    { "value": 0.01 }
+                ],
+                "innerRadius": { "signal": "width/4" },
+                "outerRadius": { "signal": "width / 2" },
+                "cornerRadius": { "value": 0 }
+
+            },
+            "hover": {}
+        }
+    }]
+}

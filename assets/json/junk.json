@@ -1,0 +1,31 @@
+[{
+        "id": 356,
+        "priorityAll": 20,
+        "priorityApps": 15,
+        "priorityGrants": 5,
+        "expandAll": 40,
+        "expandApps": 35,
+        "expandGrants": 5
+    },
+    {
+        "id": 304,
+        "priorityAll": 70,
+        "priorityApps": 45,
+        "priorityGrants": 25,
+        "expandAll": 90,
+        "expandApps": 25,
+        "expandGrants": 65
+    }
+]
+
+[{
+        "id": 356,
+        "rate": 50
+    },
+    {
+        "id": 304,
+        "rate": 70
+    }
+]
+
+"fill": { "scale": "color", "field": "priorityAll" },

@@ -1,0 +1,112 @@
+[
+    {
+       "Name":"chevrolet chevelle malibu",
+       "IPCs":"AAAA",
+       "Cylinders":8,
+       "Displacement":307,
+       "Assignee":"Samsung",
+       "Weight_in_lbs":3504,
+       "Acceleration":12,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    },
+    {
+       "Name":"buick skylark 320",
+       "IPCs":"BBBB",
+       "Cylinders":8,
+       "Displacement":350,
+       "Assignee":"Sony",
+       "Weight_in_lbs":3693,
+       "Acceleration":11.5,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    },
+    {
+       "Name":"plymouth satellite",
+       "IPCs":"CCCC",
+       "Cylinders":8,
+       "Displacement":318,
+       "Assignee":"LG",
+       "Weight_in_lbs":3436,
+       "Acceleration":11,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    },
+    {
+       "Name":"amc rebel sst",
+       "IPCs":"DDDD",
+       "Cylinders":8,
+       "Displacement":304,
+       "Assignee":"Motorola",
+       "Weight_in_lbs":3433,
+       "Acceleration":12,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    },
+    {
+       "Name":"ford torino",
+       "IPCs":"EEEE",
+       "Cylinders":8,
+       "Displacement":302,
+       "Assignee":"Lenovo",
+       "Weight_in_lbs":3449,
+       "Acceleration":10.5,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    },
+    {
+       "Name":"ford galaxie 500",
+       "IPCs":"FFFF",
+       "Cylinders":8,
+       "Displacement":429,
+       "Assignee":"Philips",
+       "Weight_in_lbs":4341,
+       "Acceleration":10,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    },
+    {
+       "Name":"chevrolet impala",
+       "IPCs":"GGGG",
+       "Cylinders":8,
+       "Displacement":454,
+       "Assignee":"Bosch",
+       "Weight_in_lbs":4354,
+       "Acceleration":9,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    },
+    {
+       "Name":"plymouth fury iii",
+       "IPCs":"HHHH",
+       "Cylinders":8,
+       "Displacement":440,
+       "Assignee":"IBM",
+       "Weight_in_lbs":4312,
+       "Acceleration":8.5,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    },
+    {
+       "Name":"pontiac catalina",
+       "IPCs":"IIII",
+       "Cylinders":8,
+       "Displacement":455,
+       "Assignee":"Intel",
+       "Weight_in_lbs":4425,
+       "Acceleration":10,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    },
+    {
+       "Name":"amc ambassador dpl",
+       "IPCs":"JJJJ",
+       "Cylinders":8,
+       "Displacement":390,
+       "Assignee":"Apple",
+       "Weight_in_lbs":3850,
+       "Acceleration":8.5,
+       "Year":"1970-01-01",
+       "Origin":"USA"
+    }
+ ]

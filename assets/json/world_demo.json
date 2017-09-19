@@ -1,0 +1,64 @@
+{
+    "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+    "width": 850,
+    "height": 550,
+    "autosize": "none",
+
+    "encode": {
+        "update": {
+            "fill": { "value": "white" }
+        }
+    },
+
+    "signals": [],
+
+    "projections": [{
+        "name": "projection",
+        "type": "mercator",
+        "scale": 132,
+        "center": [25, 51]
+    }],
+
+    "data": [{
+            "name": "unemp",
+            "url": "../../assets/json/inventions.json",
+            "format": { "type": "json", "parse": "auto" }
+        },
+        {
+            "name": "world",
+            "url": "../../assets/json/worldData.json",
+            "format": { "type": "topojson", "feature": "countries" },
+            "transform": [
+                { "type": "lookup", "from": "unemp", "key": "countryCode", "fields": ["id"], "values": ["priorityAll"] }
+
+            ]
+        }
+    ],
+
+    "scales": [{
+        "name": "color",
+        "type": "quantize",
+        "domain": [1, 100],
+        "range": { "scheme": "blues-9" }
+    }],
+
+    "marks": [{
+        "type": "shape",
+        "from": { "data": "world" },
+        "encode": {
+            "update": {
+                "strokeWidth": { "value": 0.5 },
+                "stroke": { "value": "green" },
+                "fill": { "value": "#89b2f4" },
+                "zindex": { "value": 0 }
+            },
+            "hover": {
+                "fill": { "value": "pink" },
+                "zindex": { "value": 1 }
+            }
+        },
+        "transform": [
+            { "type": "geoshape", "projection": "projection" }
+        ]
+    }]
+}
